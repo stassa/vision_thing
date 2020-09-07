@@ -12,8 +12,8 @@
                             ,single_point/3
                             ]).
 
-:-use_module('../vision_thing').
-:-use_module('../vision_thing_config').
+:-use_module('../arc').
+:-use_module('../arc_config').
 :-use_module(configuration).
 
 /** <module> Parse objects in an ARC dataset image to line segments.

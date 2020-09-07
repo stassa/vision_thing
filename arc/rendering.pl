@@ -5,7 +5,7 @@
                    ]).
 
 :-use_module(image).
-:-use_module(vision_thing_config).
+:-use_module(arc_config).
 
 /** <module> Render two-dimensional images.
 

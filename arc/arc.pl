@@ -1,16 +1,16 @@
-:-module(vision_thing, [write_segmentation_grammar/1
-                       % Cardinal directions
-                       ,north/2
-                       ,north_east/2
-                       ,east/2
-                       ,south_east/2
-                       ,south/2
-                       ,south_west/2
-                       ,west/2
-                       ,north_west/2
-                       ,here/2
-                       ,move/5
-                       ]).
+:-module(arc, [write_segmentation_grammar/1
+	       % Cardinal directions
+	      ,north/2
+	      ,north_east/2
+	      ,east/2
+	      ,south_east/2
+	      ,south/2
+	      ,south_west/2
+	      ,west/2
+	      ,north_west/2
+	      ,here/2
+	      ,move/5
+	      ]).
 
 :-user:use_module(rendering).
 :-user:use_module(image).
@@ -38,39 +38,39 @@ Project outline
 ===============
 [project_outline]
 
-This file is the entry point for the "Vision Thing" project, undertaken
-to complete preliminary work on the Abstract Reasoning Corpus (ARC)
-dataset introduced in "On the Measure of Intelligence" (Francois Chollet
-2019: https://arxiv.org/abs/1911.01547). In particular the MIL problems
-defined in the Vision Thing project are meant to establish what the ARC
+This file is the entry point for the Arc project, undertaken to complete
+preliminary work on the Abstract Reasoning Corpus (ARC) dataset
+introduced in "On the Measure of Intelligence" (Francois Chollet 2019:
+https://arxiv.org/abs/1911.01547). In particular the MIL problems
+defined in the Arc project are meant to establish what the ARC
 dataset calls "objectness priors", which in MIL terms means background
 knowledge of what constitutes an object and its properties.
 
-"Vision Thing" comprises a number of separate experiment files, each
-defining a particular task in an image analysis pipeline that, once
-completed, will represent an ARC dataset problem as an image
-transformation problem. The idea is to analyse the two images comprising
-an ARC problem, find their differences and find a plan to transform the
-input image to the output image. Individual tasks are either
-hand-crafted Prolog programs, or MIL problems set up to learn classic AI
-representations, such as grammars and plans.
+Arc comprises a number of separate experiment files, each defining a
+particular task in an image analysis pipeline that, once completed, will
+represent an ARC dataset problem as an image transformation problem. The
+idea is to analyse the two images comprising an ARC problem, find their
+differences and find a plan to transform the input image to the output
+image. Individual tasks are either hand-crafted Prolog programs, or MIL
+problems set up to learn classic AI representations, such as grammars
+and plans.
 
 Directory structure
 ===================
 [directory_structure]
 
-Vision Thing comprises the following source files:
+Arc comprises the following source files:
 
-louise/data/vision_thing
+louise/data/vision_thing/arc
 |
 |   debugging.pl
 |   image.pl
 |   image_data.pl
 |   line_segmentation.pl
 |   rendering.pl
-|   rendering_config.pl
+|   arc_config.pl
 |   shape_drawing.pl
-|   vision_thing.pl
+|   arc.pl
 |
 \---output
 
@@ -94,15 +94,15 @@ louise/data/vision_thing
 
    Predicates to visualise images and objects in glorious ASCII.
 
-6. rendering_config.pl
+6. arc_config.pl
 
-   Configuration options for rendering.pl
+   Configuration options for the rest of the project.
 
 7. shape_drawing.pl
 
    Experiment file set up to learn shape drawing plans.
 
-8. vision_thing.pl
+8. arc.pl
 
    Project entry point- this file.
 
@@ -289,9 +289,8 @@ version of line_segmentation.pl, with the listed queries and assuming
 the listed configuration options and MIL problem elements:
 
 ==
-?- list_config.
 example_clauses(call)
-experiment_file(data/vision_thing/line_segmentation.pl,line_segmentation)
+experiment_file(data/vision_thing/arc/pipeline/line_segmentation.pl,line_segmentation)
 learner(louise)
 max_invented(3)
 minimal_program_size(2,inf)
@@ -305,7 +304,8 @@ theorem_prover(resolution)
 unfold_invented(true)
 true.
 
-?- list_problem_statistics(_/4).Positive examples:    24
+?- list_problem_statistics(_/4).
+Positive examples:    24
 Negative examples:    0
 Background knowledge: 3 [vertical_line/4,horizontal_line/4,single_point/4]
 Metarules:            2 [double_chain,double_identity]
@@ -351,7 +351,7 @@ the listed configuration options and MIL problem elements:
 ==
 ?- list_config.
 example_clauses(call)
-experiment_file(data/vision_thing/shape_drawing.pl,shape_drawing)
+experiment_file(data/vision_thing/arc/pipeline/shape_drawing.pl,shape_drawing)
 learner(louise)
 max_invented(2)
 minimal_program_size(2,inf)
@@ -435,7 +435,7 @@ background knowledge and metarueles to a minimum.
 %	Write a learned segmentation grammar to an output file.
 %
 write_segmentation_grammar(Rs):-
-	vision_thing_config:line_segmentation_grammar(P)
+	arc_config:line_segmentation_grammar(P)
 	,program_symbols(Rs,Ss_)
 	,selectchk(lines/4,Ss_,Ss)
         ,closure(Ss,line_segmentation,Cs_)

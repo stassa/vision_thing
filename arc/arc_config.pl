@@ -1,8 +1,8 @@
-:-module(vision_thing_config, [colour_symbol/2
-                              ,line_segmentation_grammar/1
-                              ]).
+:-module(arc_config, [colour_symbol/2
+                     ,line_segmentation_grammar/1
+                     ]).
 
-/** <module> Configuration options for rendering.pl.
+/** <module> Configuration options for arc.pl.
 */
 
 %!      colour_symbol(?Colour:atom, ?Symbol:atom) is semidet.

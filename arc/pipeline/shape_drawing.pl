@@ -14,7 +14,7 @@
 			,end/2
                         ]).
 
-:-use_module('../vision_thing').
+:-use_module('../arc').
 :-use_module('../output/lines').
 :-user:use_module(debugging).
 :-use_module(configuration).
